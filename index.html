@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إلى فلانة ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #d81b60;
@@ -18,51 +17,42 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: #ffeef2; /* لون احتياطي في حال لم تظهر الخلفية */
             background-image: url('cit7.jpg'); 
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
-            font-family: 'Tajawal', sans-serif;
+            font-family: sans-serif;
             overflow: hidden;
-            color: var(--primary-color);
             touch-action: none;
         }
 
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 238, 242, 0.6); 
-            z-index: -1;
-        }
-
+        /* الحاوية الرئيسية */
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
-            padding: 40px 20px;
-            border-radius: 40px;
-            width: 90%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 30px;
+            width: 85%;
             max-width: 400px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-            border: 2px solid var(--soft-pink);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             z-index: 10;
-            position: relative;
+            border: 2px solid var(--soft-pink);
         }
 
         /* تكبير صورة هيلو كيتي */
         .image-box {
             width: 250px; 
             height: 250px; 
-            border-radius: 30px;
-            margin: 0 auto 25px auto;
+            border-radius: 20px;
+            margin: 0 auto 20px;
             background-size: cover;
             background-position: center;
-            border: 6px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-            transition: background-image 0.6s ease-in-out;
+            border: 5px solid white;
+            transition: 0.5s ease-in-out;
         }
 
+        /* تعريف الصور */
         .cit1 { background-image: url('cit1.jpg'); }
         .cit2 { background-image: url('cit2.jpg'); }
         .cit3 { background-image: url('cit3.jpg'); }
@@ -71,127 +61,105 @@
         .cit6 { background-image: url('cit6.jpg'); }
 
         #display-text {
-            font-size: 1.4rem;
-            font-weight: 700;
-            height: 3.5rem;
-            margin-bottom: 25px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            min-height: 3rem;
         }
 
         .btn {
             background: #ff69b4;
             color: white;
             border: none;
-            padding: 14px 45px;
+            padding: 12px 35px;
             font-size: 1.1rem;
-            font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            z-index: 20;
             transition: 0.3s;
         }
 
-        /* نظام القلوب الكثيرة المتطايرة */
-        .heart-particle {
+        /* نظام القلوب المتطايرة */
+        .heart-p {
             position: absolute;
             pointer-events: none;
-            z-index: 9999;
-            font-size: 24px;
-            animation: moveHeart 1.5s ease-out forwards;
+            font-size: 25px;
+            z-index: 100;
+            animation: fly 1.5s ease-out forwards;
         }
 
-        @keyframes moveHeart {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--tr)); opacity: 0; }
+        @keyframes fly {
+            0% { transform: translate(0,0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
         }
 
-        .heart-btn { font-size: 85px; cursor: pointer; background: none; border: none; animation: heartBeat 0.8s infinite; }
-        @keyframes heartBeat { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
         .hidden { display: none; }
-        
-        .final-screen { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 100; background-image: url('cit7.jpg'); background-size: cover; background-position: center; }
-        .final-screen::before { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); }
-        .player-card { position: relative; background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 35px; width: 300px; text-align: center; }
+        .heart-btn { font-size: 60px; background: none; border: none; cursor: pointer; animation: pulse 0.8s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
 
-<div class="container" id="main-container">
-    <div id="image-frame" class="image-box cit1"></div>
-    <div id="display-text"></div>
-    <div id="btn-container">
-        <button class="btn" id="action-btn" onclick="nextStep()">أبدأ ❤️</button>
-    </div>
-</div>
-
-<div id="final-screen" class="final-screen hidden">
-    <div class="player-card">
-        <div class="album-art cit6" style="width:200px; height:200px; margin:auto; border-radius:20px; background-size:cover; border:4px solid white;"></div>
-        <h2>أغنيتنا المفضلة 🎵</h2>
-        <p>💞 اعشقج واحبج يا فلانة🩷</p>
-        <button class="btn" onclick="location.reload()">إعادة 🔄</button>
-    </div>
+<div class="container" id="main-card">
+    <div id="img-frame" class="image-box cit1"></div>
+    <div id="display-text">انتظري قليلاً... ❤️</div>
+    <button class="btn" id="main-btn" onclick="next()">أبدأ ❤️</button>
 </div>
 
 <script>
-    // وظيفة انفجار القلوب الكثيرة
-    function createHeartBurst(x, y) {
-        const heartCount = 12; // عدد القلوب في الضغطة الواحدة
-        for (let i = 0; i < heartCount; i++) {
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.className = 'heart-particle';
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            
-            const tx = (Math.random() - 0.5) * 400; 
-            const ty = (Math.random() - 0.5) * 400 - 100; 
-            const tr = Math.random() * 360; 
-            
-            heart.style.setProperty('--tx', `${tx}px`);
-            heart.style.setProperty('--ty', `${ty}px`);
-            heart.style.setProperty('--tr', `${tr}deg`);
-            
-            const colors = ['#ff69b4', '#ff1493', '#d81b60', '#ffb6c1'];
-            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-            
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1500);
-        }
-    }
-
-    document.addEventListener('mousedown', (e) => createHeartBurst(e.clientX, e.clientY));
-    document.addEventListener('touchstart', (e) => createHeartBurst(e.touches[0].clientX, e.touches[0].clientY));
-
-    let currentStep = 0;
-    const content = [
-        { text: "هلو فلانة", class: "cit1", btn: "هلوو" },
-        { text: "فلانة عندي سؤال الجججج", class: "cit2", btn: "شنو هو؟" },
-        { text: "بس مستحية اسألج اياه  🤭", class: "cit3", btn: "اسألي" },
-        { text: "تحبين فلان لو لااا؟", class: "cit4", btn: "ها؟ 🤭" },
-        { text: "شنو هااا 😒 تحبين فلان لو لااا؟", class: "cit5", btn: "مدري" },
-        { text: "اذا تحبين فلان دوسي على القلب 🤭", class: "cit6", btn: "🩷" }
+    let step = 0;
+    const data = [
+        { t: "هلو فلانة", i: "cit1", b: "هلوو" },
+        { t: "فلانة عندي سؤال الجججج", i: "cit2", b: "شنو هو؟" },
+        { t: "بس مستحية اسألج اياه 🤭", i: "cit3", b: "اسألي" },
+        { t: "تحبين فلان لو لااا؟", i: "cit4", b: "ها؟ 🤭" },
+        { t: "شنو هااا 😒 تحبين فلان لو لااا؟", i: "cit5", b: "مدري" },
+        { t: "اذا تحبين فلان دوسي على القلب 🤭", i: "cit6", b: "🩷" }
     ];
 
-    function nextStep() {
-        if (currentStep >= content.length) {
-            document.getElementById('main-container').classList.add('hidden');
-            document.getElementById('final-screen').classList.remove('hidden');
+    function next() {
+        if (step >= data.length) {
+            document.getElementById('display-text').innerHTML = "💞 اعشقج واحبج يا فلانة 🩷";
+            document.getElementById('main-btn').classList.add('hidden');
             return;
         }
-        const data = content[currentStep];
-        const btn = document.getElementById('action-btn');
-        btn.style.opacity = '0';
         
-        setTimeout(() => {
-            document.getElementById('image-frame').className = "image-box " + data.class;
-            document.getElementById('display-text').innerText = data.text;
-            btn.innerText = data.btn;
-            btn.style.opacity = '1';
-            if(data.btn === "🩷") btn.className = "heart-btn";
-        }, 300);
-        currentStep++;
+        const current = data[step];
+        document.getElementById('img-frame').className = "image-box " + current.i;
+        document.getElementById('display-text').innerText = current.t;
+        const btn = document.getElementById('main-btn');
+        btn.innerText = current.b;
+        
+        if(current.b === "🩷") {
+            btn.className = "heart-btn";
+            btn.innerHTML = "❤️";
+        }
+        step++;
     }
-</script>
 
+    // وظيفة القلوب الكثيرة عند اللمس
+    function burst(e) {
+        const x = e.clientX || e.touches[0].clientX;
+        const y = e.clientY || e.touches[0].clientY;
+        
+        for (let i = 0; i < 12; i++) {
+            const h = document.createElement('div');
+            h.innerHTML = '❤️';
+            h.className = 'heart-p';
+            h.style.left = x + 'px';
+            h.style.top = y + 'px';
+            h.style.setProperty('--x', (Math.random() - 0.5) * 300 + 'px');
+            h.style.setProperty('--y', (Math.random() - 0.5) * 300 - 100 + 'px');
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 1500);
+        }
+    }
+
+    document.addEventListener('mousedown', burst);
+    document.addEventListener('touchstart', burst);
+    
+    // تشغيل أول خطوة تلقائياً
+    window.onload = next;
+</script>
 </body>
 </html>
