@@ -9,7 +9,7 @@
         :root {
             --primary-color: #d81b60;
             --soft-pink: #ffc1cc;
-            --transition-speed: 0.4s;
+            --glow-color: rgba(255, 105, 180, 0.8);
         }
 
         body {
@@ -26,33 +26,33 @@
             font-family: 'Tajawal', sans-serif;
             overflow: hidden;
             color: var(--primary-color);
-            /* إضافة نظام اللمس لمنع السحب الافتراضي */
             touch-action: none; 
         }
 
+        /* تعديل: جعل الخلفية أكثر عتامة */
         body::before {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 238, 242, 0.6); 
+            background: rgba(0, 0, 0, 0.5); /* تعتيم أقوى للتركيز على المحتوى */
             z-index: -1;
         }
 
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             padding: 40px 20px;
             border-radius: 40px;
             width: 85%;
-            max-width: 400px; /* تم تكبير الحاوية قليلاً لتناسب الصورة */
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            max-width: 400px;
+            box-shadow: 0 0 20px var(--glow-color); /* إشعاع خفيف حول الحاوية */
             border: 2px solid var(--soft-pink);
             z-index: 10;
             position: relative;
         }
 
-        /* تعديل: تكبير حجم الصورة إلى 250px */
+        /* تعديل: صورة مشعة */
         .image-box {
             width: 250px;
             height: 250px;
@@ -60,12 +60,11 @@
             margin: 0 auto 25px auto;
             background-size: cover;
             background-position: center;
-            border: 6px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border: 4px solid white;
+            box-shadow: 0 0 30px var(--glow-color), 0 0 10px white; /* تأثير الإشعاع */
             transition: background-image 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* كلاسات الصور */
         .cit1 { background-image: url('cit1.jpg'); }
         .cit2 { background-image: url('cit2.jpg'); }
         .cit3 { background-image: url('cit3.jpg'); }
@@ -79,8 +78,10 @@
             height: 3.5rem;
             margin-bottom: 25px;
             line-height: 1.4;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
         }
 
+        /* تعديل: أزرار مشعة */
         .btn {
             background: #ff69b4;
             color: white;
@@ -90,13 +91,14 @@
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
+            box-shadow: 0 0 15px var(--glow-color); /* إشعاع للزر */
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .btn:hover {
             transform: scale(1.08);
             background: #ff1493;
-            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+            box-shadow: 0 0 25px var(--glow-color);
         }
 
         .btn.hidden-btn { opacity: 0; pointer-events: none; transform: scale(0.8); }
@@ -107,12 +109,12 @@
             background: none;
             border: none;
             display: inline-block;
+            filter: drop-shadow(0 0 10px var(--glow-color)); /* إشعاع للقلب */
             animation: heartBeat 0.8s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
         }
 
         @keyframes heartBeat { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
 
-        /* إضافة: تنسيق القلوب المتطايرة */
         .floating-heart {
             position: absolute;
             pointer-events: none;
@@ -126,7 +128,6 @@
             100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--tr)); opacity: 0; }
         }
 
-        /* تنسيق مشغل الأغاني النهائي */
         .final-screen {
             position: fixed;
             inset: 0;
@@ -143,7 +144,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4); 
+            background: rgba(0, 0, 0, 0.6); 
             backdrop-filter: blur(5px);
         }
 
@@ -154,7 +155,7 @@
             border-radius: 35px;
             width: 300px;
             text-align: center;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 0 30px var(--glow-color);
         }
 
         .album-art {
@@ -164,12 +165,9 @@
             border-radius: 25px;
             background-size: cover;
             background-position: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             border: 4px solid white;
+            box-shadow: 0 0 20px var(--glow-color);
         }
-
-        .song-info h2 { color: var(--primary-color); margin: 10px 0 5px; font-size: 1.5rem; }
-        .song-info p { color: #888; margin: 0; font-size: 0.9rem; }
 
         .audio-controls { margin-top: 20px; }
         .play-pause-btn {
@@ -181,26 +179,22 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: 0.3s;
+            box-shadow: 0 0 15px var(--glow-color);
         }
-        .play-pause-btn:hover { background: #ff1493; transform: scale(1.1); }
 
         .progress-container {
-            width: 100%;
-            height: 6px;
-            background: #eee;
-            border-radius: 10px;
-            margin: 20px 0 10px;
-            overflow: hidden;
-            cursor: pointer;
+            width: 100%; height: 6px; background: #eee; border-radius: 10px; margin: 20px 0 10px; overflow: hidden; cursor: pointer;
         }
         .progress-bar { width: 0%; height: 100%; background: #ff69b4; }
-
         .love-note { font-size: 1.1rem; color: var(--primary-color); margin-top: 20px; font-weight: bold; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
+
+<audio id="player" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
 
 <div class="container" id="main-container">
     <div id="image-frame" class="image-box cit1"></div>
@@ -218,11 +212,8 @@
             <p> فلانة & فلان ❤️</p>
         </div>
         <div class="audio-controls">
-            <audio id="player">
-                <source src="song.mp3" type="audio/mpeg">
-            </audio>
             <div class="custom-player">
-                <button class="play-pause-btn" id="playBtn" onclick="togglePlay()">▶️</button>
+                <button class="play-pause-btn" id="playBtn" onclick="togglePlay()">⏸️</button>
                 <div class="progress-container" onclick="seek(event)">
                     <div class="progress-bar" id="progress"></div>
                 </div>
@@ -233,7 +224,17 @@
 </div>
 
 <script>
-    // إضافة: دالة انفجار القلوب
+    const player = document.getElementById('player');
+    const playBtn = document.getElementById('playBtn');
+
+    // تعديل: تشغيل الأغنية فور الدخول للموقع
+    function startMusic() {
+        player.play().catch(() => {
+            // بعض المتصفحات تمنع التشغيل التلقائي، سيتم تفعيله عند أول ضغطة
+            console.log("التشغيل التلقائي ينتظر تفاعل المستخدم.");
+        });
+    }
+
     function createHeartBurst(x, y) {
         const heartCount = 10;
         for (let i = 0; i < heartCount; i++) {
@@ -242,34 +243,31 @@
             heart.className = 'floating-heart';
             heart.style.left = x + 'px';
             heart.style.top = y + 'px';
-            
-            // قيم عشوائية للطيران
             const tx = (Math.random() - 0.5) * 400;
             const ty = (Math.random() - 0.5) * 400 - 100;
             const tr = Math.random() * 360;
-            
             heart.style.setProperty('--tx', `${tx}px`);
             heart.style.setProperty('--ty', `${ty}px`);
             heart.style.setProperty('--tr', `${tr}deg`);
-            
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 1500);
         }
     }
 
-    // إضافة مستمعي الأحداث للمس والضغط
-    document.addEventListener('mousedown', (e) => createHeartBurst(e.clientX, e.clientY));
+    document.addEventListener('mousedown', (e) => {
+        createHeartBurst(e.clientX, e.clientY);
+        startMusic(); // تفعيل الصوت عند أول ضغطة لضمان العمل في كل المتصفحات
+    });
     document.addEventListener('touchstart', (e) => {
         createHeartBurst(e.touches[0].clientX, e.touches[0].clientY);
+        startMusic();
     });
 
     let currentStep = 0;
     const textElement = document.getElementById('display-text');
     const imageFrame = document.getElementById('image-frame');
     const btn = document.getElementById('action-btn');
-    const player = document.getElementById('player');
     const progressBar = document.getElementById('progress');
-    const playBtn = document.getElementById('playBtn');
 
     const content = [
         { text: "هلو فلانة", class: "cit1", btn: "هلوو" },
@@ -294,13 +292,12 @@
     }
 
     function nextStep() {
+        startMusic(); // التأكد من عمل الموسيقى عند الضغط على "ابدأ"
         if (currentStep >= content.length) {
             document.getElementById('main-container').style.transform = "scale(0.8)";
             setTimeout(() => {
                 document.getElementById('main-container').classList.add('hidden');
                 document.getElementById('final-screen').classList.remove('hidden');
-                player.play();
-                playBtn.innerHTML = "⏸️";
             }, 300);
             return;
         }
@@ -322,13 +319,8 @@
     }
 
     function togglePlay() {
-        if (player.paused) {
-            player.play();
-            playBtn.innerHTML = "⏸️";
-        } else {
-            player.pause();
-            playBtn.innerHTML = "▶️";
-        }
+        if (player.paused) { player.play(); playBtn.innerHTML = "⏸️"; }
+        else { player.pause(); playBtn.innerHTML = "▶️"; }
     }
 
     player.ontimeupdate = function() {
@@ -338,13 +330,13 @@
 
     function seek(event) {
         const container = event.currentTarget;
-        const clickX = event.offsetX;
-        const width = container.offsetWidth;
-        player.currentTime = (clickX / width) * player.duration;
+        player.currentTime = (event.offsetX / container.offsetWidth) * player.duration;
     }
 
-    window.addEventListener('load', () => { setTimeout(nextStep, 500); });
+    window.addEventListener('load', () => { 
+        setTimeout(nextStep, 500);
+        startMusic();
+    });
 </script>
-
 </body>
 </html>
