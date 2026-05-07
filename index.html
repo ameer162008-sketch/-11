@@ -1,4 +1,4 @@
-here<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,6 @@ here<!DOCTYPE html>
         :root {
             --primary-color: #d81b60;
             --soft-pink: #ffc1cc;
-            --transition-speed: 0.4s;
         }
 
         body {
@@ -26,6 +25,7 @@ here<!DOCTYPE html>
             font-family: 'Tajawal', sans-serif;
             overflow: hidden;
             color: var(--primary-color);
+            touch-action: none; /* لمنع التمرير الافتراضي */
         }
 
         body::before {
@@ -42,26 +42,27 @@ here<!DOCTYPE html>
             backdrop-filter: blur(10px);
             padding: 40px 20px;
             border-radius: 40px;
-            width: 85%;
-            max-width: 360px;
+            width: 90%;
+            max-width: 400px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
             border: 2px solid var(--soft-pink);
-            z-index: 1;
+            z-index: 10;
+            position: relative;
         }
 
+        /* تكبير صورة هيلو كيتي */
         .image-box {
-            width: 180px;
-            height: 180px;
+            width: 250px; 
+            height: 250px; 
             border-radius: 30px;
             margin: 0 auto 25px auto;
             background-size: cover;
             background-position: center;
             border: 6px solid white;
             box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-            transition: background-image 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background-image 0.6s ease-in-out;
         }
 
-        /* كلاسات الصور */
         .cit1 { background-image: url('cit1.jpg'); }
         .cit2 { background-image: url('cit2.jpg'); }
         .cit3 { background-image: url('cit3.jpg'); }
@@ -74,7 +75,6 @@ here<!DOCTYPE html>
             font-weight: 700;
             height: 3.5rem;
             margin-bottom: 25px;
-            line-height: 1.4;
         }
 
         .btn {
@@ -86,100 +86,38 @@ here<!DOCTYPE html>
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .btn:hover {
-            transform: scale(1.08);
-            background: #ff1493;
-            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
-        }
-
-        .btn.hidden-btn { opacity: 0; pointer-events: none; transform: scale(0.8); }
-
-        .heart-btn {
-            font-size: 85px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            display: inline-block;
-            animation: heartBeat 0.8s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-
-        @keyframes heartBeat { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
-
-        /* تنسيق مشغل الأغاني النهائي */
-        .final-screen {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            background-image: url('cit7.jpg'); 
-            background-size: cover;
-            background-position: center;
-        }
-
-        .final-screen::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.4); 
-            backdrop-filter: blur(5px);
-        }
-
-        .player-card {
-            position: relative;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 35px;
-            width: 300px;
-            text-align: center;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .album-art {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 20px;
-            border-radius: 25px;
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            border: 4px solid white;
-        }
-
-        .song-info h2 { color: var(--primary-color); margin: 10px 0 5px; font-size: 1.5rem; }
-        .song-info p { color: #888; margin: 0; font-size: 0.9rem; }
-
-        .audio-controls { margin-top: 20px; }
-        .play-pause-btn {
-            background: #ff69b4;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
+            z-index: 20;
             transition: 0.3s;
         }
-        .play-pause-btn:hover { background: #ff1493; transform: scale(1.1); }
 
-        .progress-container {
-            width: 100%;
-            height: 6px;
-            background: #eee;
-            border-radius: 10px;
-            margin: 20px 0 10px;
-            overflow: hidden;
-            cursor: pointer;
+        /* تنسيق القلوب المتطايرة الكثيرة */
+        .heart-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 24px;
+            user-select: none;
+            animation: moveHeart 2s ease-out forwards;
         }
-        .progress-bar { width: 0%; height: 100%; background: #ff69b4; }
 
-        .love-note { font-size: 1.1rem; color: var(--primary-color); margin-top: 20px; font-weight: bold; }
+        @keyframes moveHeart {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                /* القيم المتغيرة سيتم تحديدها بواسطة JS */
+                transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--tr));
+                opacity: 0;
+            }
+        }
+
+        .heart-btn { font-size: 85px; cursor: pointer; background: none; border: none; animation: heartBeat 0.8s infinite; }
+        @keyframes heartBeat { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
         .hidden { display: none; }
+        .final-screen { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 100; background-image: url('cit7.jpg'); background-size: cover; background-position: center; }
+        .final-screen::before { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); }
+        .player-card { position: relative; background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 35px; width: 300px; text-align: center; }
     </style>
 </head>
 <body>
@@ -194,35 +132,52 @@ here<!DOCTYPE html>
 
 <div id="final-screen" class="final-screen hidden">
     <div class="player-card">
-        <div class="album-art cit6"></div>
-        <div class="song-info">
-            <h2>أغنيتنا المفضلة 🎵</h2>
-            <p> فلانة & فلان ❤️</p>
-        </div>
-        <div class="audio-controls">
-            <audio id="player">
-                <source src="song.mp3" type="audio/mpeg">
-            </audio>
-            <div class="custom-player">
-                <button class="play-pause-btn" id="playBtn" onclick="togglePlay()">▶️</button>
-                <div class="progress-container" onclick="seek(event)">
-                    <div class="progress-bar" id="progress"></div>
-                </div>
-            </div>
-        </div>
-        <p class="love-note"> 💞 اعشقج واحبج يا فلانة🩷</p>
+        <div class="album-art cit6" style="width:200px; height:200px; margin:auto; border-radius:20px; background-size:cover; border:4px solid white;"></div>
+        <h2>أغنيتنا المفضلة 🎵</h2>
+        <p>💞 اعشقج واحبج يا فلانة🩷</p>
+        <button class="btn" onclick="location.reload()">إعادة 🔄</button>
     </div>
 </div>
 
 <script>
-    let currentStep = 0;
-    const textElement = document.getElementById('display-text');
-    const imageFrame = document.getElementById('image-frame');
-    const btn = document.getElementById('action-btn');
-    const player = document.getElementById('player');
-    const progressBar = document.getElementById('progress');
-    const playBtn = document.getElementById('playBtn');
+    // وظيفة إنشاء "انفجار" من القلوب
+    function createHeartBurst(x, y) {
+        const heartCount = 10; // عدد القلوب في كل لمسة
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart-particle';
+            
+            // تحديد مكان البدء
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            
+            // حساب مسار عشوائي لكل قلب
+            const tx = (Math.random() - 0.5) * 300; // تحرك عشوائي لليمين أو اليسار
+            const ty = (Math.random() - 0.5) * 300 - 150; // تحرك للأعلى بشكل أكبر
+            const tr = Math.random() * 360; // دوران عشوائي
+            
+            heart.style.setProperty('--tx', `${tx}px`);
+            heart.style.setProperty('--ty', `${ty}px`);
+            heart.style.setProperty('--tr', `${tr}deg`);
+            
+            // ألوان متنوعة
+            const colors = ['#ff69b4', '#ff1493', '#d81b60', '#ffb6c1', '#ff0000'];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 2000);
+        }
+    }
 
+    // تفعيل التأثير عند اللمس أو الضغط
+    document.addEventListener('mousedown', (e) => createHeartBurst(e.clientX, e.clientY));
+    document.addEventListener('touchstart', (e) => {
+        createHeartBurst(e.touches[0].clientX, e.touches[0].clientY);
+    });
+
+    let currentStep = 0;
     const content = [
         { text: "هلو فلانة", class: "cit1", btn: "هلوو" },
         { text: "فلانة عندي سؤال الجججج", class: "cit2", btn: "شنو هو؟" },
@@ -232,70 +187,25 @@ here<!DOCTYPE html>
         { text: "اذا تحبين فلان دوسي على القلب 🤭", class: "cit6", btn: "🩷" }
     ];
 
-    function typeEffect(text, callback) {
-        let i = 0;
-        textElement.innerHTML = "";
-        function type() {
-            if (i < text.length) {
-                textElement.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, 65);
-            } else if (callback) callback();
-        }
-        type();
-    }
-
     function nextStep() {
         if (currentStep >= content.length) {
-            document.getElementById('main-container').style.transform = "scale(0.8)";
-            setTimeout(() => {
-                document.getElementById('main-container').classList.add('hidden');
-                document.getElementById('final-screen').classList.remove('hidden');
-                player.play();
-                playBtn.innerHTML = "⏸️";
-            }, 300);
+            document.getElementById('main-container').classList.add('hidden');
+            document.getElementById('final-screen').classList.remove('hidden');
             return;
         }
-
         const data = content[currentStep];
-        btn.classList.add('hidden-btn');
+        const btn = document.getElementById('action-btn');
+        btn.style.opacity = '0';
+        
         setTimeout(() => {
-            imageFrame.className = "image-box " + data.class;
-            typeEffect(data.text, () => {
-                btn.classList.remove('hidden-btn');
-                btn.innerText = data.btn;
-                if(data.btn === "❤️") {
-                    btn.className = "heart-btn";
-                    btn.innerHTML = "❤️";
-                }
-            });
+            document.getElementById('image-frame').className = "image-box " + data.class;
+            document.getElementById('display-text').innerText = data.text;
+            btn.innerText = data.btn;
+            btn.style.opacity = '1';
+            if(data.btn === "🩷") btn.className = "heart-btn";
         }, 300);
         currentStep++;
     }
-
-    function togglePlay() {
-        if (player.paused) {
-            player.play();
-            playBtn.innerHTML = "⏸️";
-        } else {
-            player.pause();
-            playBtn.innerHTML = "▶️";
-        }
-    }
-
-    player.ontimeupdate = function() {
-        const percentage = (player.currentTime / player.duration) * 100;
-        progressBar.style.width = percentage + "%";
-    };
-
-    function seek(event) {
-        const container = event.currentTarget;
-        const clickX = event.offsetX;
-        const width = container.offsetWidth;
-        player.currentTime = (clickX / width) * player.duration;
-    }
-
-    window.addEventListener('load', () => { setTimeout(nextStep, 500); });
 </script>
 
 </body>
