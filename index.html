@@ -25,7 +25,7 @@
             font-family: 'Tajawal', sans-serif;
             overflow: hidden;
             color: var(--primary-color);
-            touch-action: none; /* لمنع التمرير الافتراضي */
+            touch-action: none;
         }
 
         body::before {
@@ -90,31 +90,24 @@
             transition: 0.3s;
         }
 
-        /* تنسيق القلوب المتطايرة الكثيرة */
+        /* نظام القلوب الكثيرة المتطايرة */
         .heart-particle {
             position: absolute;
             pointer-events: none;
             z-index: 9999;
             font-size: 24px;
-            user-select: none;
-            animation: moveHeart 2s ease-out forwards;
+            animation: moveHeart 1.5s ease-out forwards;
         }
 
         @keyframes moveHeart {
-            0% {
-                transform: translate(0, 0) scale(1) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                /* القيم المتغيرة سيتم تحديدها بواسطة JS */
-                transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--tr));
-                opacity: 0;
-            }
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--tr)); opacity: 0; }
         }
 
         .heart-btn { font-size: 85px; cursor: pointer; background: none; border: none; animation: heartBeat 0.8s infinite; }
         @keyframes heartBeat { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
         .hidden { display: none; }
+        
         .final-screen { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 100; background-image: url('cit7.jpg'); background-size: cover; background-position: center; }
         .final-screen::before { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); }
         .player-card { position: relative; background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 35px; width: 300px; text-align: center; }
@@ -140,42 +133,34 @@
 </div>
 
 <script>
-    // وظيفة إنشاء "انفجار" من القلوب
+    // وظيفة انفجار القلوب الكثيرة
     function createHeartBurst(x, y) {
-        const heartCount = 10; // عدد القلوب في كل لمسة
+        const heartCount = 12; // عدد القلوب في الضغطة الواحدة
         for (let i = 0; i < heartCount; i++) {
             const heart = document.createElement('div');
             heart.innerHTML = '❤️';
             heart.className = 'heart-particle';
-            
-            // تحديد مكان البدء
             heart.style.left = x + 'px';
             heart.style.top = y + 'px';
             
-            // حساب مسار عشوائي لكل قلب
-            const tx = (Math.random() - 0.5) * 300; // تحرك عشوائي لليمين أو اليسار
-            const ty = (Math.random() - 0.5) * 300 - 150; // تحرك للأعلى بشكل أكبر
-            const tr = Math.random() * 360; // دوران عشوائي
+            const tx = (Math.random() - 0.5) * 400; 
+            const ty = (Math.random() - 0.5) * 400 - 100; 
+            const tr = Math.random() * 360; 
             
             heart.style.setProperty('--tx', `${tx}px`);
             heart.style.setProperty('--ty', `${ty}px`);
             heart.style.setProperty('--tr', `${tr}deg`);
             
-            // ألوان متنوعة
-            const colors = ['#ff69b4', '#ff1493', '#d81b60', '#ffb6c1', '#ff0000'];
+            const colors = ['#ff69b4', '#ff1493', '#d81b60', '#ffb6c1'];
             heart.style.color = colors[Math.floor(Math.random() * colors.length)];
             
             document.body.appendChild(heart);
-            
-            setTimeout(() => heart.remove(), 2000);
+            setTimeout(() => heart.remove(), 1500);
         }
     }
 
-    // تفعيل التأثير عند اللمس أو الضغط
     document.addEventListener('mousedown', (e) => createHeartBurst(e.clientX, e.clientY));
-    document.addEventListener('touchstart', (e) => {
-        createHeartBurst(e.touches[0].clientX, e.touches[0].clientY);
-    });
+    document.addEventListener('touchstart', (e) => createHeartBurst(e.touches[0].clientX, e.touches[0].clientY));
 
     let currentStep = 0;
     const content = [
